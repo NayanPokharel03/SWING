@@ -1,16 +1,16 @@
-package SimpleSwing;
+package View;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SimpleSwingApp {
+public class StudentView {
 
 
         public static void main(String[] args) {
 
             // Create frame
             JFrame frame = new JFrame("Swing Example");
-            frame.setSize(1000, 1000);
+            frame.setSize(1300, 900);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(null);
             frame.setLocationRelativeTo(null);
@@ -76,7 +76,7 @@ public class SimpleSwingApp {
             button1.setFont(font);
             frame.add(button1);
 
-
+            //Text field
             JTextField first_name = new JTextField();
             first_name.setBounds(200, 50, 300, 18);
             frame.add(first_name);
@@ -121,6 +121,6 @@ public class SimpleSwingApp {
 
 
         }
-    }
+}
 
 
