@@ -119,7 +119,6 @@ public class StudentView {
             frame.setVisible(true);
 
 
-
         }
 }
 
