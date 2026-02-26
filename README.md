@@ -29,11 +29,24 @@
 ## Project Structure
 
 ```
-src/
- ├── Authentication/
- │     └── LoginPage.java
- └── imgs/
-       └── ClzLogo.jpg
+SWING
+├── .idea/
+├── Screanshots/
+├── src/
+│   ├── Authentication/
+│   │   └── LoginPage.java
+│   ├── Connection/
+│   │   └── Dbconnection
+│   ├── Model/
+│   │   └── StudentModel
+│   ├── View/
+│   │   └── StudentView
+│   └── imgs/
+│       ├── bg.png
+│       ├── BuildLogo.jpg
+│       └── ClzLogo.jpg
+├── README.md
+
 ```
 ---
 
