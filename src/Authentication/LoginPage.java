@@ -11,58 +11,63 @@ public class LoginPage extends JFrame {
 
     LoginPage() {
 
-        //Text and font details
-        JLabel label = new JLabel("Username: ");
-        label.setBounds(10, 50, 200, 18);
+        //Fonts
         Font font = new Font("Arial", Font.BOLD, 18);
+        Font fontB = new Font("Arial", Font.BOLD, 38);
+
+        //Heading details
+        JLabel label = new JLabel("Login");
+        label.setBounds(165, 55, 180, 58);
+        label.setFont(fontB);
+        add(label);
+
+        label = new JLabel("Username: ");
+        label.setBounds(60, 145, 180, 18);
         label.setFont(font);
         add(label);
 
         label = new JLabel("Password: ");
-        label.setBounds(10, 90, 200, 18);
-        font = new Font("Arial", Font.BOLD, 18);
+        label.setBounds(60, 215, 180, 18);
         label.setFont(font);
         add(label);
 
 
-
         //Text field
         JTextField username = new JTextField();
-        username.setBounds(200, 50, 300, 25);
+        username.setBounds(160, 140, 200, 30);
         add(username);
 
         JPasswordField password = new JPasswordField();
-        password.setBounds(200, 90, 300, 25);
+        password.setBounds(160, 210, 200, 30);
         add(password);
 
 
-
         //button
-        JButton button = new JButton("Login");
-        button.setBounds(10, 400, 200, 30);
+        JButton button = new JButton("Log in");
+        button.setBounds(165, 280, 100, 30);
         button.setFont(font);
+        button.setForeground(WHITE);
         button.setBackground(Color.GREEN);
         add(button);
 
-        JButton button1 = new JButton("Cancel");
-        button1.setBounds(300, 400, 200, 30);
-        button1.setFont(font);
-        button1.setBackground(Color.RED);
-        add(button1);
+
+        //Glass Panel
+        glass g = new glass();
+        g.setBounds(45, 50, 335, 280);
+        g.setLayout(null);
+        add(g);
 
 
-        //Image -> clzLogo
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("imgs/ClzLogo.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(100, 100, 200, 200);
-        setLayout(null);
+        //Image -> ClzBuilding
+        ImageIcon i1 = new ImageIcon(LoginPage.class.getResource("/imgs/BuildLogo.jpg"));
+        Image i2 = i1.getImage().getScaledInstance(720, 478, Image.SCALE_DEFAULT);
+        JLabel image = new JLabel(new ImageIcon(i2));
+        image.setBounds(0, 0, 720, 478);
         add(image);
 
 
         setTitle("Login Page");
-        setBounds(500, 200, 700, 500);
+        setBounds(500, 200, 720, 478);
         setLayout(null);
         setVisible(true);
 
