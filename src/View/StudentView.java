@@ -3,64 +3,59 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class StudentView {
+public class StudentView extends JFrame {
 
 
-        public static void main(String[] args) {
+       public StudentView() {
 
             // Create frame
-            JFrame frame = new JFrame("Swing Example");
+            JFrame frame = new JFrame("Student Details");
             frame.setSize(1300, 900);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setLayout(null);
             frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
 
+            //Font Details
+            Font font = new Font("Arial", Font.BOLD, 18);
 
             //Text and font details
             JLabel label = new JLabel("First Name:");
-            Font font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 50, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Last Name:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 75, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Roll no:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 100, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Email:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 125, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Age:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 150, 1000, 22);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Gender:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 175, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Date of Birth:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 200, 1000, 18);
             label.setFont(font);
             frame.add(label);
 
             label = new JLabel("Address:");
-            font = new Font("Arial", Font.BOLD, 18);
             label.setBounds(10, 225, 1000, 18);
             label.setFont(font);
             frame.add(label);
@@ -120,6 +115,9 @@ public class StudentView {
 
 
         }
+    public static void main(String[] args){
+           new StudentView();
+    }
 }
 
 
