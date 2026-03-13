@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DbConnection {
 
         public static Connection getConnection() throws SQLException {
-            Connection connection = null;
+            Connection connection;
             String URL = "jdbc:mysql://localhost:3306/crud";
             String USER = "root";
             String PASSWORD = "";
