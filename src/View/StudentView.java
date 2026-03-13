@@ -38,7 +38,7 @@ public class StudentView extends JFrame {
 
           // Create frame
           setTitle("Student Details");
-          setSize(1300, 900);
+          setSize(830, 700);
           setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
           setLayout(null);
           setLocationRelativeTo(null);
@@ -150,28 +150,28 @@ public class StudentView extends JFrame {
 
           // Scroll pane
           JScrollPane scrollPane = new JScrollPane(table);
-          scrollPane.setBounds(30, 330, 1150, 400);
+          scrollPane.setBounds(30, 330, 750, 300);
           add(scrollPane);
 
           //button
 
           add = new JButton("Add");
-          add.setBounds(20, 800, 200, 30);
+          add.setBounds(520, 70, 200, 30);
           add.setFont(font);
           add(add);
 
           delete = new JButton("Delete");
-          delete.setBounds(230, 800, 200, 30);
+          delete.setBounds(520, 120, 200, 30);
           delete.setFont(font);
           add(delete);
 
           edit = new JButton("Edit");
-          edit.setBounds(440, 800, 200, 30);
+          edit.setBounds(520, 170, 200, 30);
           edit.setFont(font);
           add(edit);
 
           reset = new JButton("Reset");
-          reset.setBounds(650, 800, 200, 30);
+          reset.setBounds(520, 220, 200, 30);
           reset.setFont(font);
           add(reset);
 
