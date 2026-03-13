@@ -1,5 +1,9 @@
 package View;
 
+import Controller.StudentController;
+import DAO.StudentDAO;
+import Model.StudentModel;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -170,7 +174,10 @@ public class StudentView extends JFrame {
 
        }
     public static void main(String[] args){
-           new StudentView();
+           StudentView studentView = new StudentView();
+           StudentModel studentModel = new StudentModel();
+         StudentDAO studentDAO = new StudentDAO();
+         StudentController studentController = new StudentController(studentDAO, studentView, studentModel);
     }
 }
 
