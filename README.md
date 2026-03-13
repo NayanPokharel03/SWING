@@ -12,8 +12,8 @@
 * Login Page UI using Java Swing
 * Username and Password input fields
 * Login button interface
-* Image/logo integration
-* Basic window configuration and layout management
+* Basic Crud operation
+* Database connection with MySql
 
 ---
 
@@ -37,9 +37,14 @@ SWING
 │   │   └── LoginPage.java
 │   ├── Connection/
 │   │   └── Dbconnection
+│   ├── Controller/
+│   │   └── StudentController
 │   ├── Model/
 │   │   └── StudentModel
-│   ├── View/
+│   ├── DAO/
+│   │   └── StudentDAO
+│   ├── View/ 
+│   │   └── Main
 │   │   └── StudentView
 │   └── imgs/
 │       ├── bg.png
@@ -60,14 +65,20 @@ SWING
 ---
 ### Login Success
 
-![Login](Screanshots/LoginSuccess.png)
+![Success](Screanshots/LoginSuccess.png)
+
+
+---
+### Student Detail
+
+![Detail](Screanshots/StudentDetails.png)
 
 
 ---
 
 ## Author
 
-**Nayan Pokharel**
+**Nayan Raj Pokharel**
 
 ---
 
