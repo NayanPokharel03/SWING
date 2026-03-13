@@ -1,6 +1,5 @@
 package Authentication;
 
-
 import View.StudentView;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class LoginPage extends JFrame implements ActionListener {
     JPasswordField password;
     JButton button;
 
-    LoginPage() {
+    public LoginPage() {
 
         //Fonts
         Font font = new Font("Arial", Font.BOLD, 18);
