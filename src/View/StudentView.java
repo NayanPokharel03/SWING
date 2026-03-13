@@ -3,11 +3,11 @@ package View;
 import Controller.StudentController;
 import DAO.StudentDAO;
 import Model.StudentModel;
-
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.*;
+import javax.swing.table.TableRowSorter;
 
 public class StudentView extends JFrame {
 
@@ -133,6 +133,10 @@ public class StudentView extends JFrame {
 
           tableModel = new DefaultTableModel(columns, 0);
           table = new JTable(tableModel);
+
+          // Enable sorting by first name initially, and allow user to sort by any column
+          TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
+          table.setRowSorter(sorter);
 
           // table text styling
           table.setFont(font);
