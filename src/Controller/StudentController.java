@@ -3,18 +3,19 @@ package Controller;
 import DAO.StudentDAO;
 import Model.StudentModel;
 import View.StudentView;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class StudentController {
     private StudentDAO studentDAO;
     private StudentView studentView;
     private StudentModel student;
+    private String selectedPhone;
 
     public StudentController(StudentDAO studentDAO, StudentView studentView, StudentModel student) {
         this.studentDAO = studentDAO;
@@ -27,17 +28,30 @@ public class StudentController {
         studentView.edit.addActionListener(e -> updateStudent());
         studentView.reset.addActionListener(e -> clearFields());
 
+        studentView.table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         loadStudents();
+        selectedPhone = null;
 
         studentView.table.getSelectionModel().addListSelectionListener(e -> fillFieldsFromSelectedRow());
     }
 
     private void saveStudent() {
+        String first = studentView.first_name.getText().trim();
+        String last = studentView.last_name.getText().trim();
+        String phone = studentView.phone_no.getText().trim();
+
+        if (first.isEmpty() || last.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "First name, last name, and phone number are required.");
+            return;
+        }
+
         populateStudentFromFields();
         try {
             int result = studentDAO.saveStudent(student);
             if (result == 1) {
                 JOptionPane.showMessageDialog(null, "Student saved successfully");
+                selectedPhone = phone;
                 clearFields();
             }
         } catch (SQLException ex) {
@@ -47,13 +61,12 @@ public class StudentController {
     }
 
     private void deleteStudent() {
-        String phone = studentView.phone_no.getText();
-        if (phone.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Enter phone number to delete student");
+        if (selectedPhone == null) {
+            JOptionPane.showMessageDialog(null, "Select a student from the list to delete.");
             return;
         }
         try {
-            int result = studentDAO.deleteStudent(phone);
+            int result = studentDAO.deleteStudent(selectedPhone);
             if (result == 1) {
                 JOptionPane.showMessageDialog(null, "Student deleted successfully");
                 clearFields();
@@ -65,11 +78,26 @@ public class StudentController {
     }
 
     private void updateStudent() {
+        if (selectedPhone == null) {
+            JOptionPane.showMessageDialog(null, "Select a student from the list to edit.");
+            return;
+        }
+
+        String first = studentView.first_name.getText().trim();
+        String last = studentView.last_name.getText().trim();
+        String phone = studentView.phone_no.getText().trim();
+
+        if (first.isEmpty() || last.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "First name, last name, and phone number are required.");
+            return;
+        }
+
         populateStudentFromFields();
         try {
-            int result = studentDAO.updateStudent(student);
+            int result = studentDAO.updateStudent(student, selectedPhone);
             if (result == 1) {
                 JOptionPane.showMessageDialog(null, "Student updated successfully");
+                selectedPhone = phone;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,11 +137,18 @@ public class StudentController {
         studentView.dob.setText("");
         studentView.address.setText("");
         studentView.first_name.requestFocus();
+        studentView.table.clearSelection();
+        selectedPhone = null;
     }
 
     public void loadStudents() {
         try {
             List<StudentModel> students = studentDAO.getAllStudents();
+            // Sort alphabetically by first name, then last name, then phone number
+            students.sort(Comparator.comparing(StudentModel::getFirst_name, String.CASE_INSENSITIVE_ORDER)
+                    .thenComparing(StudentModel::getLast_name, String.CASE_INSENSITIVE_ORDER)
+                    .thenComparing(StudentModel::getPhone_no));
+
             DefaultTableModel model = (DefaultTableModel) studentView.table.getModel();
             model.setRowCount(0); // clear table
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -150,6 +185,7 @@ public class StudentController {
             studentView.gender.setText(studentView.table.getValueAt(row, 5).toString());
             studentView.dob.setText(studentView.table.getValueAt(row, 6).toString());
             studentView.address.setText(studentView.table.getValueAt(row, 7).toString());
+            selectedPhone = studentView.table.getValueAt(row, 2).toString();
         }
     }
 }

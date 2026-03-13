@@ -1,8 +1,7 @@
 package DAO;
 
-import Model.StudentModel;
 import Connection.DbConnection;
-
+import Model.StudentModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +15,8 @@ public class StudentDAO {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-        Connection conn = DbConnection.getConnection();
-        if (conn != null) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, student.getFirst_name());
             ps.setString(2, student.getLast_name());
             ps.setString(3, student.getPhone_no());
@@ -29,11 +27,9 @@ public class StudentDAO {
             ps.setString(8, student.getAddress());
 
             ps.executeUpdate();
-            ps.close();
             System.out.println("Student saved successfully");
             return 1;
         }
-        return 0;
     }
 
     // Retrieve all students from the database
@@ -41,10 +37,9 @@ public class StudentDAO {
         List<StudentModel> students = new ArrayList<>();
         String sql = "SELECT * FROM student";
 
-        Connection conn = DbConnection.getConnection();
-        if (conn != null) {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 StudentModel student = new StudentModel();
                 student.setFirst_name(rs.getString("first_name"));
@@ -57,8 +52,6 @@ public class StudentDAO {
                 student.setAddress(rs.getString("address"));
                 students.add(student);
             }
-            rs.close();
-            ps.close();
         }
 
         return students;
@@ -68,42 +61,42 @@ public class StudentDAO {
     public int deleteStudent(String phone_no) throws SQLException {
         String sql = "DELETE FROM student WHERE phone_no = ?";
 
-        Connection conn = DbConnection.getConnection();
-        if (conn != null) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, phone_no);
             int rows = ps.executeUpdate();
-            ps.close();
             return rows;
         }
-        return 0;
     }
 
-    // Update a student record
-    public int updateStudent(StudentModel student) throws SQLException {
+    // Update a student record (uses the original phone number to locate the row)
+    public int updateStudent(StudentModel student, String originalPhone) throws SQLException {
         String sql = """
             UPDATE student
-            SET first_name = ?, last_name = ?, email = ?, age = ?, gender = ?, dob = ?, address = ?
+            SET first_name = ?, last_name = ?, phone_no = ?, email = ?, age = ?, gender = ?, dob = ?, address = ?
             WHERE phone_no = ?
         """;
 
-        Connection conn = DbConnection.getConnection();
-        if (conn != null) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, student.getFirst_name());
             ps.setString(2, student.getLast_name());
-            ps.setString(3, student.getEmail());
-            ps.setString(4, student.getAge());
-            ps.setString(5, student.getGender());
-            ps.setDate(6, student.getDob() != null ? new java.sql.Date(student.getDob().getTime()) : null);
-            ps.setString(7, student.getAddress());
-            ps.setString(8, student.getPhone_no());
+            ps.setString(3, student.getPhone_no());
+            ps.setString(4, student.getEmail());
+            ps.setString(5, student.getAge());
+            ps.setString(6, student.getGender());
+            ps.setDate(7, student.getDob() != null ? new java.sql.Date(student.getDob().getTime()) : null);
+            ps.setString(8, student.getAddress());
+            ps.setString(9, originalPhone);
 
             int rows = ps.executeUpdate();
-            ps.close();
             return rows;
         }
-        return 0;
+    }
+
+    // legacy method kept for compatibility; updates using the current phone number as key
+    public int updateStudent(StudentModel student) throws SQLException {
+        return updateStudent(student, student.getPhone_no());
     }
 }
 
