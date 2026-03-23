@@ -28,7 +28,6 @@ public class StudentView extends JFrame {
 
 
      public DefaultTableModel tableModel;
-     public JTableHeader tableHeader;
      public JTable table;
 
      @SuppressWarnings("unused")
